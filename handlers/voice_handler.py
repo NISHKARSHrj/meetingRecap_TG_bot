@@ -16,7 +16,7 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     user_id = update.effective_user.id
     
-    if not has_credits(user_id):
+    if not has_credits(user_id) <= 0:
 
         await update.message.reply_text(
             "❌ Free Trial Finished!\n\n"
@@ -42,11 +42,11 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("❌ Unsupported file.")
         return
-    
+    logger.info("Fetching file from Telegram...")
     file = await context.bot.get_file(
         telegram_file.file_id
     )
-    
+    logger.info("File fetched successfully.")
     username = update.effective_user.username or "unknown"
 
     timestamp = update.message.date.strftime(
@@ -84,10 +84,13 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         remaining = get_balance(user_id)
 
-        summary += f"\n\n━━━━━━━━━━━━━━\n💳 Credits Left: {remaining}"
-
+        summary += ("\n\n━━━━━━━━━━━━━━"
+        f"\n💳 Credits Left: {remaining}"
+        )
         await processing.edit_text(summary)
+
     except Exception as e:
+
         logger.exception(e)
         await update.message.reply_text("❌ Error occurred while processing the audio.")
 
@@ -96,5 +99,6 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             Path(save_path).unlink(missing_ok=True)
             logger.info("🗑 Temporary file deleted.")
+
         except Exception as cleanup_error:
             logger.exception(cleanup_error)
