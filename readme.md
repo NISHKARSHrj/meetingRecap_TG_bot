@@ -1,6 +1,10 @@
+<p align="center">
+  <img src="assets/banner.png" alt="MeetingMind Banner" width="100%">
+</p>
+
 # 🧠 MeetingMind
 
-> AI-powered Telegram assistant that transforms voice recordings into structured meeting summaries.
+> Turn Conversations into Action.
 
 MeetingMind automatically converts voice notes, MP3, and WAV recordings into concise meeting recaps using local speech recognition and AI-powered summarization.
 
