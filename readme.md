@@ -1,150 +1,140 @@
-# Meeting Recap Bot
+# 🧠 MeetingMind
 
-A Telegram bot that helps users turn meeting voice notes into structured summaries using AI.
+> AI-powered Telegram assistant that transforms voice recordings into structured meeting summaries.
 
-## Features
+MeetingMind automatically converts voice notes, MP3, and WAV recordings into concise meeting recaps using local speech recognition and AI-powered summarization.
 
-### Current Features
+---
 
-* `/start` command
-* Receives voice messages from users
-* Detects Telegram voice notes
-* Displays voice note information such as:
+## ✨ Features
 
-  * Duration
-  * File Size
-  * File ID
-* Beginner-friendly code structure
-* Built using async Python
+- 🎙 Voice Note Support (.ogg)
+- 🎵 MP3 Audio Support
+- 📁 WAV Audio Support
+- 🧠 Local Speech-to-Text (Faster Whisper)
+- 🤖 AI Meeting Summaries (DeepSeek via OpenRouter)
+- 📦 Automatic Audio Archiving
+- 💳 Free Credit System
+- 📊 Balance Tracking
+- 🛒 Premium Upgrade Command
+- 📝 Logging
+- ⚠ Global Error Handling
+- 🧹 Automatic File Cleanup
 
-### Planned Features
+---
 
-* Speech-to-Text using OpenAI Whisper
-* AI Meeting Summaries using OpenAI GPT
-* Action Item Extraction
-* Decision Tracking
-* Follow-up Suggestions
-* User Credit System
-* Private Telegram Channel Archive
-* Payment Integration for Additional Credits
-
-## Commands
-
-| Command    | Description                            |
-| ---------- | -------------------------------------- |
-| `/start`   | Start the bot and show welcome message |
-| `/help`    | Display available commands             |
-| `/balance` | Show remaining recap credits           |
-| `/buy`     | Purchase additional recap credits      |
-
-## Tech Stack
-
-* Python 3
-* python-telegram-bot
-* OpenAI API
-* python-dotenv
-
-## Project Structure
-
-meeting-recap-bot/
-
-├── bot.py
-
-├── .env
-
-├── temp/
-
-└── requirements.txt
-
-## Installation
-
-### Clone the Repository
-
-```bash
-git clone <your-repository-url>
-cd meeting-recap-bot
-```
-
-### Create Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### Activate Virtual Environment
-
-Linux / Fedora:
-
-```bash
-source venv/bin/activate
-```
-
-Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-### Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## Environment Variables
-
-Create a `.env` file in the project root.
-
-```env
-BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
-OPENAI_API_KEY=YOUR_OPENAI_API_KEY
-```
-
-## Running the Bot
-
-```bash
-python bot.py
-```
-
-If everything is configured correctly, you should see:
+## 🚀 How It Works
 
 ```text
-Bot is running...
+User sends audio
+        │
+        ▼
+Download Audio
+        │
+        ▼
+Archive Audio
+        │
+        ▼
+Faster Whisper
+(Local Speech Recognition)
+        │
+        ▼
+Transcript
+        │
+        ▼
+DeepSeek AI
+(OpenRouter)
+        │
+        ▼
+Structured Meeting Summary
+        │
+        ▼
+Reply to User
 ```
 
-## Learning Goals
+---
 
-This project was built as a learning project to understand:
+## 🛠 Tech Stack
 
-* Telegram Bot Development
-* Async Programming in Python
-* Working with APIs
-* AI Integration
-* File Handling
-* Prompt Engineering
-* Error Handling
-* Building Real-World Automation Tools
+- Python
+- python-telegram-bot
+- Faster Whisper
+- OpenRouter
+- DeepSeek
+- SQLite *(Coming Soon)*
+- FFmpeg
 
-## Future Roadmap
+---
 
-### Version 1
+## 📂 Project Structure
 
-* Basic Telegram Bot
-* Voice Note Detection
-* Command Handling
+```text
+MeetingMind/
 
-### Version 2
+bot.py
+config.py
 
-* Whisper Transcription
-* GPT Summaries
-* Credit System
+handlers/
+services/
+utils/
 
-### Version 3
+database/
+temp/
+```
 
-* Voice Note Archive Channel
-* Payment Integration
-* User Dashboard
+---
 
-## Author
+## 📋 Commands
 
-Built by Nishkarsh as a learning project to explore AI-powered productivity tools and Telegram bot development.
+| Command | Description |
+|----------|-------------|
+| `/start` | Start the bot |
+| `/help` | Help menu |
+| `/balance` | Check remaining credits |
+| `/buy` | Purchase more credits |
+
+---
+
+## 🎯 Example Output
+
+```text
+🎯 Action Items
+• Complete the UI
+• Test the application
+
+💡 Decisions
+• Launch Flip next Friday
+
+📌 Follow-up
+• Schedule next meeting
+```
+
+---
+
+## 🌟 Roadmap
+
+- ✅ Voice Notes
+- ✅ MP3 Support
+- ✅ WAV Support
+- ✅ Faster Whisper
+- ✅ DeepSeek Integration
+- ✅ Credit System
+- ✅ Audio Archiving
+- ✅ Logging
+- ✅ Error Handling
+- 🔄 SQLite Storage
+- 🔄 Google Cloud Deployment
+- 🔄 Docker Support
+- 🔄 Payment Integration
+- 🔄 Meeting History
+
+---
+
+## 👨‍💻 Developer
+
+**Nishkarsh**
+
+GitHub:
+https://github.com/NISHKARSHrj
+
+If you like this project, consider giving it a ⭐.
