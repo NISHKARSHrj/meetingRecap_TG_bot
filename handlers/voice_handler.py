@@ -7,7 +7,24 @@ from datetime import datetime
 from services.archive import archive_audio
 from services.transcriber import transcribe_audio
 from services.summarizer import generate_summary
+
+from utils.logger import logger
+from config import path
+
+from services.credits import get_balance, deduct_credits, has_credits
 async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
+    user_id = update.effective_user.id
+    
+    if not has_credits(user_id):
+
+        await update.message.reply_text(
+            "❌ Free Trial Finished!\n\n"
+            "❌ You have no free credits left.\n\n"
+            "Use /buy to purchase more credits."
+        )
+        return
+
     
     if update.message.voice:
         telegram_file = update.message.voice
@@ -35,13 +52,14 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     timestamp = update.message.date.strftime(
         "%Y-%m-%d_%H-%M-%S"
     )
-    save_path = f"temp/{username}_{timestamp}.{extension}"
+
+    save_path = f"{path}{username}_{timestamp}.{extension}"
 
     await file.download_to_drive(save_path)
     processing = await update.message.reply_text(
         "🎙️ Audio received.\n\n⏳ Processing..."
     )
-    print(f"Audio saved to {save_path}")
+    logger.info(f"Audio saved to {save_path}")
     await archive_audio(
         bot=context.bot,
         file_path=save_path,
@@ -54,24 +72,29 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         transcript = transcribe_audio(save_path)
-        print(transcript)
+
+        logger.info("Audio downloaded successfully.")
+        
         await processing.edit_text(
             "🧠 Generating meeting summary..."
         )
 
         summary = generate_summary(transcript)
+        deduct_credits(user_id)
         
-        await update.message.reply_text(summary)
+        remaining = get_balance(user_id)
+
+        summary += f"\n\n━━━━━━━━━━━━━━\n💳 Credits Left: {remaining}"
+
+        await processing.edit_text(summary)
     except Exception as e:
-        print(e)
+        logger.exception(e)
         await update.message.reply_text("❌ Error occurred while processing the audio.")
 
     finally:
 
-        # -------- Cleanup -------- #
-
         try:
             Path(save_path).unlink(missing_ok=True)
-            print("🗑 Temporary file deleted.")
+            logger.info("🗑 Temporary file deleted.")
         except Exception as cleanup_error:
-            print(cleanup_error)
+            logger.exception(cleanup_error)
