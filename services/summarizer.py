@@ -1,5 +1,6 @@
 from openai import OpenAI
-from config import Openrouter_key
+from config import Openrouter_key, Deepseek_model
+import os
 
 client = OpenAI(
     api_key=Openrouter_key,
@@ -29,7 +30,7 @@ def generate_summary(transcript: str) -> str:
     {transcript}
     """
     response = client.chat.completions.create(
-        model="deepseek/deepseek-chat-v3",
+        model=Deepseek_model,
         messages=[
             {
                 "role": "system",
